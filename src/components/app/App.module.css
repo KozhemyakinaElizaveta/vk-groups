@@ -81,7 +81,6 @@
   border: 1px solid #dce1e6;
   padding: 20px;
   border-radius: 30px;
-  width: 12vw;
 }
 
 .avatar {
@@ -117,7 +116,7 @@
   color: #6e7173;
   font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
   font-weight: 900;
-  font-size: 1.5vw;
+  font-size: 1.2vw;
 }
 
 .container{
@@ -130,7 +129,7 @@
   color: #0077ffb8;
   font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
   font-weight: 500;
-  font-size: 1.3vw;
+  font-size: 1vw;
 }
 
 .butt {
@@ -141,7 +140,7 @@
   border: 2px solid #0077ff;
   border-radius: 5px;
   width: 6.5vw;
-  height: 5vh;
+  height: 2vw;
   font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
   font-weight: 800;
   font-size: 1vw;
