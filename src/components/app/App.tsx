@@ -1,6 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import axios, { AxiosResponse } from 'axios';
 import styles from "./App.module.css";
+import { useAppDispatch, useAppSelector } from '../../services/hooks';
+import { getOpenModal } from '../../services/store';
+import { CLOSE_MODAL, NO_GROUP, OPEN_MODAL, selectGroup } from '../../services/actions';
+import Modal from '../modal/Modal';
+import GroupDetails from '../details/GroupDetails';
 
 interface Group {
   id: number;
@@ -33,6 +38,9 @@ function App() {
   });
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
+
+  const friendsModal = useAppSelector(getOpenModal);
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -96,12 +104,24 @@ function App() {
     setFilteredGroups(filtered);
   }, [groups, filter]);
 
-  const showFriends = (groupId: number) => {
-    setShowFriendsMap((prevMap) => ({
-      ...prevMap,
-      [groupId]: !prevMap[groupId],
-    }));
+  // const showFriends = (groupId: number) => {
+  //   setShowFriendsMap((prevMap) => ({
+  //     ...prevMap,
+  //     [groupId]: !prevMap[groupId],
+  //   }));
+  // };
+
+  const openGroupModal = (group: any) => {
+    dispatch(selectGroup(group));
+    dispatch({
+        type: OPEN_MODAL,
+    });
   };
+
+  function closeModal() {
+    dispatch({ type: CLOSE_MODAL });
+    dispatch({type: NO_GROUP})
+  }
 
   return (
     <div className={styles.App}>
@@ -165,25 +185,18 @@ function App() {
                   <span className={styles.item}>Members: {group.members_count}</span>
                 </div>
                 {group.friends && group.friends.length > 0 && (
-                  <>
-                    <button className={styles.butt} onClick={() => showFriends(group.id)}>
+                    <button className={styles.butt} onClick = {() => openGroupModal(group)}>
                       Friends ({group.friends.length})
                     </button>
-                    {showFriendsMap[group.id] && (
-                      <div className={styles.friends}>
-                        <h4 className={styles.item}>Friends:</h4>
-                          {group.friends.map((friend, index) => (
-                            <span className={styles.value} key={index}>{`${friend.first_name} ${friend.last_name}`}</span>
-                          ))}
-                      </div>
-                    )}
-                  </>
                 )}
               </div>
             ))
           )}
         </div>
       )}
+      {friendsModal && <Modal onClose={closeModal}>
+        <GroupDetails />
+      </Modal>}
     </div>
   );
 }
